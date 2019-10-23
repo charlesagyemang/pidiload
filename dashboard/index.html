@@ -68,7 +68,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Details</h6>
             <a class="collapse-item courseCount" href="/courses">All Courses</a>
-            <a class="collapse-item" data-toggle="modal" data-target="#exampleModal" href="#">Add New Course</a>
+            <a id="addNewCourse" class="collapse-item" data-toggle="modal" data-target="#exampleModal" href="#">Add New Course</a>
           </div>
         </div>
       </li>
@@ -270,7 +270,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+          <h5 class="modal-title" id="addCourseModalTitleText">Add Course Modal</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -278,18 +278,22 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Recipient:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="recipient-name" class="col-form-label">Title:</label>
+              <input id="inputCourseTitle" type="text" class="form-control" id="recipient-name">
             </div>
             <div class="form-group">
-              <label for="message-text" class="col-form-label">Message:</label>
-              <textarea class="form-control" id="message-text"></textarea>
+              <label for="recipient-name" class="col-form-label">View Trailer Link:</label>
+              <input id="inputCourseTrailerLink" type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description:</label>
+              <textarea id="inputCourseDesc" class="form-control" id="message-text"></textarea>
             </div>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Send message</button>
+          <button id="addCourseSubmitButton" type="button" class="btn btn-primary">Send message</button>
         </div>
       </div>
     </div>
@@ -312,6 +316,8 @@
   <!-- Page level custom scripts -->
   <script src="../js/demo/datatables-demo.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="../js/addCourse.js"></script>
+
 
   <script type="text/javascript">
     const channel = JSON.parse(localStorage.channelGotten);
@@ -331,25 +337,6 @@
 
     localStorage.lessons = JSON.stringify(lessons);
 
-    /*
-    console.log("loading........ Course Creating");
-    axios.post('https://poole23.herokuapp.com/api/courses', {
-      channelId: channel.id,
-      payload: {},
-      title: 'How To Find The Progression Of Any Song',
-      desc: 'Progression Course',
-      trailerLink: 'https://www.youtube.com/watch?v=Crf3dhnb9p0',
-    }, JSON.parse(localStorage.myConfig))
-    .then((response) => {
-      console.log("...done");
-      console.log(response.data);
-      localStorage.channelGotten = JSON.stringify(response.data);
-      console.log(localStorage.gottenChannel);
-      // location.reload();
-    }, (error) => {
-      console.log(error);
-    });
-    */
 
     /*
     courses.forEach((eachCourse, ind)=>{
