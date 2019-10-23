@@ -28,101 +28,6 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-      <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-music"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3 channelName">Pianoafrik <sup>2</sup></div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="/dashboard">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Interface
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-home"></i>
-          <span>Courses</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Details</h6>
-            <a class="collapse-item courseCount" href="/courses">All Courses</a>
-            <a id="addNewCourse" class="collapse-item" data-toggle="modal" data-target="#exampleModal" href="#">Add New Course</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-book"></i>
-          <span>Lessons</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Details:</h6>
-            <a class="collapse-item lessonCount" href="/lessons">All Lessons</a>
-            <a id="addNewLesson" class="collapse-item" href="#" data-toggle="modal" data-target="#lessonModal">Add Lesson</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Coupons</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Details</h6>
-            <a class="collapse-item" href="/coupons">All Coupons</a>
-            <a class="collapse-item" href="#">Add Coupon</a>
-          </div>
-        </div>
-      </li>
-
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
-    <!-- End of Sidebar -->
-
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
@@ -139,63 +44,9 @@
           </div>
 
           <!-- Content Row -->
-          <div class="row">
+          <div id="appendRow" class="row">
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Courses</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800 courseCount"></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Lessons</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800 lessonCount"></div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-book fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-4 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Coupons</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10</div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <!-- Pending Requests Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -232,100 +83,6 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="../login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <button style="display:none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addCourseModalTitleText">Add Course Modal</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Title:</label>
-              <input id="inputCourseTitle" type="text" class="form-control" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">View Trailer Link:</label>
-              <input id="inputCourseTrailerLink" type="text" class="form-control" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="message-text" class="col-form-label">Description:</label>
-              <textarea id="inputCourseDesc" class="form-control" id="message-text"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button id="addCourseSubmitButton" type="button" class="btn btn-primary">Send message</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="modal fade" id="lessonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addLessonModalTitleText">Add Course Modal</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Title:</label>
-              <input id="inputLessonTitle" type="text" class="form-control" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Video Link:</label>
-              <input id="inputLessonYoutubeLink" type="text" class="form-control" id="recipient-name">
-            </div>
-            <div class="form-group">
-              <label for="recipient-name" class="col-form-label">Choose A Course:</label>
-              <div id="courseSelect">
-
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="message-text" class="col-form-label">Description:</label>
-              <textarea id="inputLessonDesc" class="form-control" id="message-text"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button id="addLessonSubmitButton" type="button" class="btn btn-primary">Send message</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
@@ -363,31 +120,6 @@
       });
     })
 
-    // localStorage.lessons = JSON.stringify(lessons);
-
-
-    /*
-    courses.forEach((eachCourse, ind)=>{
-      axios.post(`https://poole23.herokuapp.com/api/lessons/${channel.id}`, {
-        courseId: eachCourse.id,
-        payload: {},
-        title: `Lesson ${ind}22`,
-        desc: `Lesson One Description ${ind}212`,
-        youtubeLink: 'https://www.google.com',
-      }, JSON.parse(localStorage.myConfig))
-      .then((response) => {
-        console.log("...done");
-        console.log(response.data);
-        localStorage.channelGotten = JSON.stringify(response.data);
-        // console.log(localStorage.channelGotten);
-        // location.reload();
-      }, (error) => {
-        console.log(error);
-      });
-    })
-    */
-
-
 
     $("document").ready(function(){
       console.log(lessons.length);
@@ -396,6 +128,77 @@
       $(".channelName").html(`${channel.name}`);
       $(".courseCount").append(` ${channel.courses.length}`);
       $(".lessonCount").append(` ${lessons.length}`);
+
+      let maks = [];
+
+      courses.forEach((eachCourse) => {
+
+        let header =  `<!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-4 col-md-6 mb-4">
+                              <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                  <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Coupons</div>
+                                      <div class="table-responsive">
+                                        <table class="table">
+                                          <thead>
+                                            <tr>
+                                              <th>#</th>
+                                              <th>Firstname</th>
+                                              <th>Lastname</th>
+                                              <th>Age</th>
+                                              <th>City</th>
+                                              <th>Country</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>`
+        let lessonArr = [];
+        eachCourse.lessons.forEach((eachLessom) => {
+          let man = `  <tr>
+                <td>1</td>
+                <td>Anna</td>
+                <td>Pitt</td>
+                <td>35</td>
+                <td>New York</td>
+                <td>USA</td>
+              </tr>`
+          lessonArr.push(man);
+        })
+        let downer =    `
+                          <tr>
+                              <td>1</td>
+                              <td>Anna</td>
+                              <td>Pitt</td>
+                              <td>35</td>
+                              <td>New York</td>
+                              <td>USA</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`
+
+            const final = header + lessonArr.join("\n") + downer
+            maks.push(final)
+      })
+
+      $("#appendRow").html(maks.join("\n"));
+
+
+
 
     })
   </script>
