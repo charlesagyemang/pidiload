@@ -306,6 +306,11 @@
       });
     })
 
+    const myConfig =  {
+      headers: { Authorization: `Bearer ${localStorage.tokenGotten}`}
+    };
+
+
     $("document").ready(function(){
 
       $("#diplayDashboard").html(`${channel.name} Dashboard`);
@@ -378,7 +383,77 @@
       $('#lessonTableBody tbody').on('click', '.eachLessonEditButton', function () {
           const lessonId = $(this).attr("lessonId");
           const senderId = `${lessonId},${channel.id}`
-          console.log(senderId);
+          // console.log(senderId);
+
+
+          $("#addNewLesson").click();
+          $("#addLessonModalTitleText").html("Edit Lesson");
+          $("#addLessonSubmitButton").text("Edit Lesson");
+
+          let coursesArray = [];
+          courses.forEach((eachCourse)=>{
+            const lam = `<option value=${eachCourse.id}>${eachCourse.title}</option>`;
+            coursesArray.push(lam);
+          })
+
+          // courseSelect
+          const finalSelectBody = `<select id="selectCourses">\n` + coursesArray.join("\n") + "\n</select>";
+
+          $("#courseSelect").html(finalSelectBody);
+
+          const selectedLesson = lessons.filter(ca => ca.id == lessonId)[0];
+
+          const course = courses.filter(ca => ca.id == selectedLesson.courseId )[0];
+
+          $("#inputLessonTitle").val(selectedLesson.title);
+          $("#inputLessonDesc").val(selectedLesson.desc);
+          $("#inputLessonYoutubeLink").val(selectedLesson.youtubeLink);
+          $(`#courseSelect option[value=${course.id}]`).attr('selected','selected');
+          // console.log(course);
+
+          $("#addLessonSubmitButton").unbind("click").click(function(){
+            let $this = $(this);
+            let newTitle = $("#inputLessonTitle").val();
+            let newLessonDesc = $("#inputLessonDesc").val();
+            let newYoutubeLink = $("#inputLessonYoutubeLink").val();
+            let newCourseId = $('#selectCourses').find(":selected").val();
+
+            const bodyToSend = {
+              title: newTitle,
+              desc: newLessonDesc,
+              youtubeLink: newYoutubeLink,
+              courseId: newCourseId
+            }
+
+            if ( newTitle === selectedLesson.title &&
+                 newLessonDesc === selectedLesson.desc &&
+                 newCourseId === selectedLesson.courseId &&
+                 newYoutubeLink === selectedLesson.youtubeLink ) {
+              alert("Update Failed: No New Changes...")
+              return;
+            }
+
+
+
+            // make api call
+
+            $this.text("Updatng Data Please Wait...");
+
+            // /*
+            axios.put(`https://poole23.herokuapp.com/api/lessons/${senderId}`, bodyToSend, myConfig)
+            .then((response) => {
+              $this.text("Success... Realoading... Please Wait");
+              // console.log("...done");
+              console.log(response.data);
+              localStorage.channelGotten = JSON.stringify(response.data);
+              console.log(localStorage.gottenChannel);
+              location.reload();
+            }, (error) => {
+              console.log(error);
+            });
+            // */
+
+          })
       });
       //======== Edit Lesson Functionality ======//
 
