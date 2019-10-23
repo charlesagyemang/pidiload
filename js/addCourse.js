@@ -32,7 +32,7 @@ $("#addNewCourse").unbind("click").click(function(){
       .then((response) => {
         $this.text("Success...");
         console.log("...done");
-        console.log(response.data);
+        // console.log(response.data);
         localStorage.channelGotten = JSON.stringify(response.data);
         console.log(localStorage.gottenChannel);
         location.reload();

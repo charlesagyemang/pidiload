@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Pianoafrik</title>
+  <title class="channelName">Pianoafrik</title>
 
   <!-- Custom fonts for this template -->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,7 +37,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-music"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Pianoafrik <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3 channelName">Pianoafrik <sup>2</sup></div>
       </a>
 
       <!-- Divider -->
@@ -67,8 +67,8 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Details</h6>
-            <a class="collapse-item" href="/courses">All Courses</a>
-            <a class="collapse-item" data-toggle="modal" data-target="#exampleModal" href="#">Add New Course</a>
+            <a class="collapse-item courseCount" href="/courses">All Courses</a>
+            <a id="addNewCourse" class="collapse-item" data-toggle="modal" data-target="#exampleModal" href="#">Add New Course</a>
           </div>
         </div>
       </li>
@@ -82,7 +82,7 @@
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Details:</h6>
-            <a class="collapse-item" href="/lessons">All Lessons</a>
+            <a class="collapse-item lessonCount" href="/lessons">All Lessons</a>
             <a class="collapse-item" href="#">Add Lesson</a>
           </div>
         </div>
@@ -196,7 +196,7 @@
       </div>
     </div>
   </div>
-  
+
   <button style="display:none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -248,14 +248,20 @@
 
   <!-- Page level custom scripts -->
   <script src="../js/demo/datatables-demo.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="../js/addCourse.js"></script>
 
   <script>
+    const channel = JSON.parse(localStorage.channelGotten);
+    const courses = channel.courses;
+    const lessons = JSON.parse(localStorage.lessons);
     $("document").ready(function(){
-      const channel = JSON.parse(localStorage.channelGotten);
-      const courses = channel.courses;
-      const lessons = JSON.parse(localStorage.lessons);
-      // console.log(lessons);
 
+      $("#diplayDashboard").html(`${channel.name} Dashboard`);
+      $(".channelName").html(`${channel.name}`);
+      $(".courseCount").append(` ${channel.courses.length}`);
+      $(".lessonCount").append(` ${lessons.length}`);
+      // console.log(lessons);
       //======== Show Table Logic =====//
 
       const bodyHead = `
