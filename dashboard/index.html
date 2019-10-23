@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Pianoafrik</title>
+  <title class="channelName">Pianoafrik</title>
 
   <!-- Custom fonts for this template -->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -37,7 +37,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-music"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Pianoafrik <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3 channelName">Pianoafrik <sup>2</sup></div>
       </a>
 
       <!-- Divider -->
@@ -67,7 +67,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Details</h6>
-            <a class="collapse-item" href="/courses">All Courses</a>
+            <a class="collapse-item courseCount" href="/courses">All Courses</a>
             <a class="collapse-item" data-toggle="modal" data-target="#exampleModal" href="#">Add New Course</a>
           </div>
         </div>
@@ -135,7 +135,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 id="diplayDashboard" class="h3 mb-0 text-gray-800">Dashboard</h1>
           </div>
 
           <!-- Content Row -->
@@ -148,7 +148,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Courses</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800 courseCount"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -165,7 +165,7 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Lessons</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                      <div id="lessonCount" class="h5 mb-0 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-book fa-2x text-gray-300"></i>
@@ -311,6 +311,77 @@
 
   <!-- Page level custom scripts -->
   <script src="../js/demo/datatables-demo.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script type="text/javascript">
+    const channel = JSON.parse(localStorage.channelGotten);
+    //lessons Logic
+    const courses = channel.courses;
+
+    let lessons = [];
+    // console.log(channel);
+
+    channel.courses.forEach((eachCourse)=>{
+      let allLessons = eachCourse.lessons;
+      // count += allLessons.length;
+      allLessons.forEach((eachLesson)=>{
+        lessons.push(eachLesson);
+      });
+    })
+
+    /*
+    console.log("loading........ Course Creating");
+    axios.post('https://poole23.herokuapp.com/api/courses', {
+      channelId: channel.id,
+      payload: {},
+      title: 'How To Find The Progression Of Any Song',
+      desc: 'Progression Course',
+      trailerLink: 'https://www.youtube.com/watch?v=Crf3dhnb9p0',
+    }, JSON.parse(localStorage.myConfig))
+    .then((response) => {
+      console.log("...done");
+      console.log(response.data);
+      localStorage.channelGotten = JSON.stringify(response.data);
+      console.log(localStorage.gottenChannel);
+      // location.reload();
+    }, (error) => {
+      console.log(error);
+    });
+    */
+
+    /*
+    courses.forEach((eachCourse, ind)=>{
+      axios.post(`https://poole23.herokuapp.com/api/lessons/${channel.id}`, {
+        courseId: eachCourse.id,
+        payload: {},
+        title: `Lesson ${ind}22`,
+        desc: `Lesson One Description ${ind}212`,
+        youtubeLink: 'https://www.google.com',
+      }, JSON.parse(localStorage.myConfig))
+      .then((response) => {
+        console.log("...done");
+        console.log(response.data);
+        localStorage.channelGotten = JSON.stringify(response.data);
+        // console.log(localStorage.channelGotten);
+        // location.reload();
+      }, (error) => {
+        console.log(error);
+      });
+    })
+    */
+
+
+
+    $("document").ready(function(){
+      console.log(lessons.length);
+      console.log(channel.name);
+      $("#diplayDashboard").html(`${channel.name} Dashboard`);
+      $(".channelName").html(`${channel.name}`);
+      $(".courseCount").append(` ${channel.courses.length}`);
+      $("#lessonCount").html(`${lessons.length}`);
+
+    })
+  </script>
 
 </body>
 
