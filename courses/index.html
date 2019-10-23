@@ -199,7 +199,7 @@
   </div>
 
 
-  <button style="display:none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+  <button style="display:none" type="button" class="btn btn-primary openModalButton" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -258,6 +258,9 @@
     const channel = JSON.parse(localStorage.channelGotten);
     const courses = channel.courses;
     const lessons = JSON.parse(localStorage.lessons);
+    const myConfig =  {
+      headers: { Authorization: `Bearer ${localStorage.tokenGotten}`}
+    };
 
     $("document").ready(function(){
 
@@ -307,7 +310,7 @@
                           <td><a href=${eachCourse.youtubeLink} target="_blanc">Video Link</a></td>
                           <td>${eachCourse.lessons.length}</td>
                           <td><button courseId=${eachCourse.id} class="btn btn-primary eachCourseEditButton">Edit</button></td>
-                          <td><button courseId=${eachCourse.id} class="btn btn-danger  eachCourseDeleteButton">Edit</button></td>
+                          <td><button courseId=${eachCourse.id} class="btn btn-danger  eachCourseDeleteButton">Delete</button></td>
                         </tr>`
 
         lessonArray.push(eacher);
@@ -327,31 +330,98 @@
       })
 
       //======== End Show Table Logic =====//
-      //
 
 
 
-      //======== Edit Lesson Functionality ======//
-      $('#lessonTableBody tbody').on('click', '.eachCourseEditButton', function () {
-          const courseId = $(this).attr("courseId");
-          const senderId = `${courseId},${channel.id}`
-          console.log(senderId);
-      });
-      //======== Edit Lesson Functionality ======//
+
+        //======== Edit Lesson Functionality ======//
+        $('#lessonTableBody tbody').on('click', '.eachCourseEditButton', function () {
+            const courseId = $(this).attr("courseId");
+
+            console.log(courseId);
+
+            const selectedCourse = courses.filter(cou => cou.id == courseId)[0];
+
+            $(".openModalButton").click();
+            $("#addCourseModalTitleText").html("Edit Course");
+            $("#addCourseSubmitButton").text("Edit Course");
+
+            $("#inputCourseTitle").val(selectedCourse.title);
+            $("#inputCourseDesc").val(selectedCourse.desc);
+            $("#inputCourseTrailerLink").val(selectedCourse.trailerLink);
+            // console.log(selectedCourse);
+
+            $("#addCourseSubmitButton").unbind("click").click(function(){
+              let $this = $(this);
+              let newTitle = $("#inputCourseTitle").val();
+              let newCourseDesc = $("#inputCourseDesc").val();
+              let newTrailerLink = $("#inputCourseTrailerLink").val();
+
+              const bodyToSend = {
+                title: newTitle,
+                desc: newCourseDesc,
+                trailerLink: newTrailerLink,
+              }
+
+              if ( newTitle === selectedCourse.title && newCourseDesc === selectedCourse.desc && newTrailerLink === selectedCourse.trailerLink) {
+                alert("Update Failed: No New Changes...")
+                return;
+              }
 
 
 
-      //======== Delete Lesson Functionality ======//
-      $('#lessonTableBody tbody').on('click', '.eachCourseDeleteButton', function () {
-          const courseId = $(this).attr("courseId");
-          const senderId = `${courseId},${channel.id}`;
+              // make api call
+              console.log("something cvhnaged");
 
-          console.log(senderId);
-      });
-      //======== Delete Lesson Functionality ======//
+              $this.text("Updatng Data Please Wait...")
+              console.log(JSON.parse(localStorage.myConfig));
+
+              axios.post(`https://poole23.herokuapp.com/api/courses/edit/${courseId}`, bodyToSend, myConfig)
+              .then((response) => {
+                $this.text("Success... Realoading... Please Wait");
+                // console.log("...done");
+                console.log(response.data);
+                localStorage.channelGotten = JSON.stringify(response.data);
+                console.log(localStorage.gottenChannel);
+                location.reload();
+              }, (error) => {
+                console.log(error);
+              });
+
+            })
+        });
+        //======== Edit Lesson Functionality ======//
 
 
 
+        //======== Delete Lesson Functionality ======//
+        $('#lessonTableBody tbody').on('click', '.eachCourseDeleteButton', function () {
+            const courseId = $(this).attr("courseId");
+            const $this = $(this);
+
+
+            const sure = confirm("Are You Sure You Wanna delete This Course? All Lessons Under The Course Will Bew Deleted As Well Please Note")
+
+            if (sure) {
+              $this.text("Deleting..")
+
+              axios.post(`https://poole23.herokuapp.com/api/courses/delete/${courseId}`, { channelId: channel.id }, myConfig)
+              .then((response) => {
+                $this.text("Success... Realoading... Please Wait");
+                console.log(response.data);
+                localStorage.channelGotten = JSON.stringify(response.data);
+                console.log(localStorage.gottenChannel);
+                location.reload();
+              }, (error) => {
+                console.log(error);
+                alert("An Error Ocuured Please Try Again")
+              });
+
+              return
+            }
+            console.log("not Sure");
+        });
+        //======== Delete Lesson Functionality ======//
     })
   </script>
 

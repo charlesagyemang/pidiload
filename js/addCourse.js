@@ -3,6 +3,8 @@ console.log("heyy from Add Course");
 // title
 // desc
 // trailerLink
+
+//===== Add Course Logic =====//
 $("#addNewCourse").unbind("click").click(function(){
   $("#addCourseModalTitleText").html("Add New Course");
   $("#addCourseSubmitButton").text("Add Course");
@@ -47,3 +49,4 @@ $("#addNewCourse").unbind("click").click(function(){
     alert("Error: A Course Should At Least Have A Title");
   })
 })
+//===== Add Course Logic =====//
