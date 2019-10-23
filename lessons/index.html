@@ -461,10 +461,32 @@
 
       //======== Delete Lesson Functionality ======//
       $('#lessonTableBody tbody').on('click', '.eachLessonDeleteButton', function () {
+          let $this = $(this);
           const lessonId = $(this).attr("lessonId");
           const senderId = `${lessonId},${channel.id}`;
 
           console.log(senderId);
+
+          const sure = confirm("Are You Sure You Wanna delete This Lesson?")
+
+          if (sure) {
+            $this.text("Deleting..")
+
+            axios.post(`https://poole23.herokuapp.com/api/lessons/delete/${lessonId}`, { channelId: channel.id }, myConfig)
+            .then((response) => {
+              $this.text("Success... Realoading... Please Wait");
+              console.log(response.data);
+              localStorage.channelGotten = JSON.stringify(response.data);
+              console.log(localStorage.gottenChannel);
+              location.reload();
+            }, (error) => {
+              console.log(error);
+              alert("An Error Ocuured Please Try Again")
+            });
+
+            return
+          }
+          console.log("not Sure");
       });
       //======== Delete Lesson Functionality ======//
 
