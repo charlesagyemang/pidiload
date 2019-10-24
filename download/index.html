@@ -107,20 +107,14 @@
   <script type="text/javascript">
     async function makeCall(url, callback) {
       try {
-        $(`.setDownloadLink`).html("++generating link... Pleae Wait++");
-
         await axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link`, { url: url })
         .then((response) => {
-          // console.log(response.data);
-          // return response.data.url
           callback(response.data.link);
         }, (error) => {
           console.log(error);
-          // alert("An Error Ocuured Please Try Again")
-          // callback("failed", "Error Occured");
         });
       } catch(err) {
-        console.log(err); // TypeError: failed to fetch
+        console.log(err);
       }
     }
     const channel = JSON.parse(localStorage.channelGotten);
@@ -167,7 +161,7 @@
                                       </div>
 
                                       <br><br /><br >
-                                      <div class="table-responsive">
+                                      <div id=${eachCourse.id} class="table-responsive">
                                         <table class="table">
                                           <thead>
                                             <tr>
@@ -179,12 +173,12 @@
                                           </thead>
                                           <tbody>`
         let lessonArr = [];
-        eachCourse.lessons.forEach((eachLessom) => {
+        eachCourse.lessons.reverse().forEach((eachLessom) => {
           let man = `  <tr>
                 <td>${eachLessom.title}</td>
                 <td><a href=${eachLessom.youtubeLink} target="_blanc">Video Link</a></td>
                 <td><button url=${eachLessom.youtubeLink} id=${eachLessom.id} lessonId=${eachLessom.id}  class="btn btn-primary massa">Generate Link</button></td>
-                <td id=setDownloadLink${eachLessom.id}>Nil</td>
+                <td id=setDownloadLink${eachLessom.id}>NA</td>
               </tr>`
           lessonArr.push(man);
         })
@@ -203,6 +197,8 @@
 
       $("#appendRow").html(maks.join("\n"));
 
+      const disableArray = [];
+
       $(".massa").click(function(){
         console.log("heyy");
         const id = $(this).attr("lessonId");
@@ -211,13 +207,19 @@
         $('.massa').prop("disabled", true);
         $(`#setDownloadLink${id}`).html("Generating Link Please Wait")
         makeCall(url, function(url){
-          const kink = `Link Generated
-                    <a target="_black" class="btn btn-success" href=${url}>Download</a>
-                  `;
+          const kink = `<a target="_black" class="btn btn-success" href=${url}>Download</a>`;
           console.log(url);
           $(`#setDownloadLink${id}`).html(kink);
           $('.massa').prop("disabled", false);
-          $(`#${id}`).prop("disabled", true);
+          // $(`#${id}`).prop("disabled", true);
+          disableArray.push(id);
+
+          // disable all clicked
+          disableArray.forEach((obj)=>{
+            $(`#${obj}`).prop("disabled", true);
+            $(`#${obj}`).text("Link Generated");
+          })
+
         })
 
       })
