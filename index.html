@@ -9,66 +9,58 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Pianoafrik</title>
+  <title class="channelName">Pianoafrik</title>
 
-  <!-- Custom fonts for this template-->
+  <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
+  <!-- Custom styles for this template -->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-  <style media="screen">
-    .bg-login-image{
-      background: url(https://www.musicnotes.com/images2/promos/store/900x520_piano-min.jpg)
-    }
-  </style>
+  <!-- Custom styles for this page -->
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
-<body class="bg-gradient-primary">
+<body id="page-top">
 
-  <div class="container">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
 
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
+    <!-- Sidebar -->
+    <!-- Sidebar -->
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Youtube Admin Portal</h1>
-                  </div>
-                  <form class="user">
-                    <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="inputPassword" placeholder="Password">
-                    </div>
-                  </form>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
 
-                  <button id="loginButton" class="btn btn-primary btn-user btn-block">
-                    Login
-                  </button>
-                  <hr>
-                </div>
-              </div>
-            </div>
+        <!-- Topbar -->
+        <br><br>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <center>
+          <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4"> -->
+            <h1 id="diplayDashboard" class="h3 mb-0 text-gray-800">Pianoafrik Youtube Downloader</h1><br>
+          <!-- </div> -->
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Paste Url Of Youtube Video And Press Enter</label>
+            <input id="youtubeUrl" type="text" class="form-control" id="recipient-name" placeholder="Eg. https://www.youtube.com/watch?v=2Sttgg7J-rc">
           </div>
-        </div>
+          <p id="displayProgress"></p>
 
-      </div>
+          <div id="revealDownloadButton">
 
-    </div>
+          </div>
 
-  </div>
+          </center>
+
+
+
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -79,53 +71,60 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="js/demo/datatables-demo.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="js/addCourse.js"></script>
+
 
   <script type="text/javascript">
 
-    $("document").ready( function (){
+    axios.get(`https://poole23.herokuapp.com/api/ping/`)
+    .then((response) => {
+      console.log(response.data);
+    }, (error) => {
+      console.log(error);
+    });
 
-      $("#loginButton").unbind("click").click(function(){
-        let $this = $(this);
-        let email    = $("#inputEmail").val();
-        let password = $("#inputPassword").val();
+    // axios.post(`https://poole23.herokuapp.com/api/ping/teletabies`)
+    // .then((response) => {
+    //   console.log(response.data);
+    // }, (error) => {
+    //   console.log(error);
+    // });
 
-        $this.text("Authenticating...");
+    $("document").ready(function(){
 
-        if (email.length > 0 && password.length > 0) {
+      $( "#youtubeUrl" ).on( "keydown", function(event) {
+        $("#shower").css("display","none");
+        $this = $(this);
+        const url = $this.val();
 
-          console.log("lamaa");
-          localStorage.clear();
-          axios.post('https://poole23.herokuapp.com/api/users/login', {
-            email: email,
-            password: password
-          })
-          .then((response) => {
-            $this.text("Success...Redirecting..");
-            const data = response.data;
-            // console.log(data);
-            // /*
-            localStorage.dataGotten = JSON.stringify(data);
-            localStorage.idGotten = data.id;
-            localStorage.tokenGotten = data.token;
-            localStorage.channelGotten = JSON.stringify(data.channels[data.channels.length - 1]);
-            localStorage.myConfig = JSON.stringify({ Authorization: `Bearer ${data.token}`})
-            // console.log(JSON.parse(localStorage.myConfig));
-            // console.log(JSON.parse(localStorage.channelGotten));
-
-            location.href = "/dashboard";
-            // */
-          }, (error) => {
-            console.log(error);
-            alert("wrong email and password")
-          });
-
-          return
+        if (event.which == 13) {
+          if (url.length > 0) {
+            $("#displayProgress").html("Generating Download Link.... Please Wait..");
+            // make api call
+            axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link`, { url: url })
+            .then((response) => {
+              $("#displayProgress").html("Link Generated Please Click On Download");
+              $this.text("Success... Realoading... Please Wait");
+              console.log(response.data);
+              const downloadButton = `<a id="shower" class="btn btn-primary" href=${response.data.link} target=_blanc>Download</a><br><br/>`
+              $("#revealDownloadButton").html(downloadButton);
+            }, (error) => {
+              console.log(error);
+              alert("An Error Ocuured Please Try Again")
+            });
+            return;
+          }
+          alert("Please Enter A Url");
         }
-
-        alert("Please Enter Email And Password")
-      })
-
+      });
     })
   </script>
 
