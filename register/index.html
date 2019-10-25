@@ -21,11 +21,11 @@
   <title>Pianoafrik</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
   <style media="screen">
     .bg-login-image{
@@ -56,10 +56,20 @@
                   </div>
                   <form class="user">
                     <div class="form-group">
+                      <label for="inputEmail">Enter Email Here</label>
                       <input type="email" class="form-control form-control-user" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                     </div>
                     <div class="form-group">
+                      <label for="inputPassword">Enter Password Here</label>
                       <input type="password" class="form-control form-control-user" id="inputPassword" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputChannelName">Enter Channel Name Here</label>
+                      <input type="text" class="form-control form-control-user" id="inputChannelName" aria-describedby="channelNameHelp" placeholder="Eg Pianoafrik">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputChannelLink">Enter Channel Link Here</label>
+                      <input type="text" class="form-control form-control-user" id="inputChannelLink" aria-describedby="channelLinkHelp" placeholder="Eg https://www.youtube.com/channel/UCa79ezgA4dlxMff539PLhQg">
                     </div>
                   </form>
 
@@ -80,48 +90,59 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="../js/sb-admin-2.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <script type="text/javascript">
 
     $("document").ready( function (){
 
+
       $("#loginButton").unbind("click").click(function(){
         let $this = $(this);
         let email    = $("#inputEmail").val();
         let password = $("#inputPassword").val();
+        let channelName = $("#inputChannelName").val();
+        let channelLink = $("#inputChannelLink").val();
 
-        $this.text("Authenticating...");
+        // $this.text("Authenticating...");
 
-        if (email.length > 0 && password.length > 0) {
+        if (email.length > 0 && password.length > 0 && channelName.length > 0 && channelLink.length > 0) {
 
-          console.log("lamaa");
           localStorage.clear();
-          axios.post('https://poole23.herokuapp.com/api/users/login', {
+
+          const bodyToSend = {
+            name: channelName,
             email: email,
-            password: password
-          })
+            password: password,
+            channelName: channelName,
+            channelLink: channelLink,
+            payload: {},
+          }
+
+          console.log(bodyToSend);
+          $this.text("Creating Account....")
+
+          axios.post('https://poole23.herokuapp.com/api/ping/shatta.bundles', bodyToSend)
           .then((response) => {
             $this.text("Success...Redirecting..");
             const data = response.data;
             // console.log(data);
             // /*
             localStorage.dataGotten = JSON.stringify(data);
-            localStorage.idGotten = data.id;
-            localStorage.tokenGotten = data.token;
-            localStorage.channelGotten = JSON.stringify(data.channels[data.channels.length - 1]);
-            localStorage.myConfig = JSON.stringify({headers: { Authorization: `Bearer ${data.token}`}});
+            localStorage.idGotten = data.u.id;
+            localStorage.tokenGotten = data.u.token;
+            localStorage.myConfig = JSON.stringify({headers: { Authorization: `Bearer ${data.u.token}`}})
+            localStorage.channelGotten = JSON.stringify(data.channel);
             // console.log(JSON.parse(localStorage.myConfig));
-            // console.log(JSON.parse(localStorage.channelGotten));
-
+            console.log(JSON.parse(localStorage.channelGotten));
             location.href = "/dashboard";
             // */
           }, (error) => {
@@ -132,7 +153,7 @@
           return
         }
 
-        alert("Please Enter Email And Password")
+        alert("Error: All Fields Are Required")
       })
 
     })
