@@ -147,6 +147,9 @@
       console.log(newExpirationDate, newCoursesValidFor);
 
       // validate shit
+      // const koobiDate = "2019-10-10"
+
+
 
       if ( newExpirationDate > todaysDate || newExpirationDate === todaysDate ) {
 
@@ -162,7 +165,7 @@
         });
 
       } else {
-        await $("#fullBody").html("<h1>Error: Unauthorized Client</h1>");
+        await $("#fullBody").html("<h1>Error: Unauthorized Client: This Link Is Expired</h1>");
         // return;
       }
 
