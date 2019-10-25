@@ -105,138 +105,188 @@
   <script src="../js/demo/datatables-demo.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="../js/addCourse.js"></script>
+  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
 
   <script type="text/javascript">
-    async function makeCall(url, callback) {
-      try {
-        await axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link`, { url: url })
+
+    (async function(){
+
+      async function makeCall(url, callback) {
+        try {
+          await axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link`, { url: url })
+          .then((response) => {
+            callback(response.data.link);
+          }, (error) => {
+            console.log(error);
+          });
+        } catch(err) {
+          console.log(err);
+        }
+      }
+
+
+      const newUrl  = await window.location.href
+
+      // const linkUrl = "http://localhost:8080/en-download/?301040Y291cnNlcz1vQUxESzNOOGd5clJkSGJFdixqS0JMZWhpSzdZRkpFUXhFSCZleHBEYXRlPU1vbiBPY3QgMjggMjAxOSAwMjoxOToyNiBHTVQrMDAwMCAoQ29vcmRpbmF0ZWQgVW5pdmVyc2FsIFRpbWUpJmNoYW5uZWxJZD01VGZpU216Ukh0c0IyUGQySyZ1c2VyTmFtZT1QYXVsIEFsa2FsYmFv";
+
+      const newBreakLinkDown = await atob(newUrl.split("?301040")[1]).split("&");
+
+      let newCoursesValidFor = await newBreakLinkDown[0].split("=")[1].split(",");
+
+      const newExpirationDate  = await moment(newBreakLinkDown[1].split("=")[1]).format().split("T")[0];
+
+      const newChannelId    = await newBreakLinkDown[2].split("=")[1];
+
+      const newUserName     = await newBreakLinkDown[3].split("=")[1];
+
+      const todaysDate = await new Date().toISOString().split("T")[0];
+
+      let validator = await false;
+
+      console.log(newExpirationDate, newCoursesValidFor);
+
+      // validate shit
+
+      if ( newExpirationDate > todaysDate || newExpirationDate === todaysDate ) {
+
+        // start doing the checks
+        $("#diplayDashboard").html("Loading.......");
+        await axios.post(`https://poole23.herokuapp.com/api/ping/piano.afrik.download.portal`, { channelId: newChannelId })
         .then((response) => {
-          callback(response.data.link);
+          localStorage.channelGotten = JSON.stringify(response.data);
+          console.log(JSON.parse(localStorage.channelGotten));
+          $("#diplayDashboard").html("Success.......");
         }, (error) => {
           console.log(error);
         });
-      } catch(err) {
-        console.log(err);
+
+      } else {
+        await $("#fullBody").html("<h1>Error: Unauthorized Client</h1>");
+        // return;
       }
-    }
 
 
-    // do checks and set channel shit
-    // if (1 < 9) {
-    //   $("#fullBody").html("<h1>Error: Unauthorized Client</h1>");
-    // }
+      const channel = await JSON.parse(localStorage.channelGotten);
+      //lessons Logic
+      const courses = await channel.courses;
 
+      const coupons = await channel.coupons;
 
-    const channel = JSON.parse(localStorage.channelGotten);
-    //lessons Logic
-    const courses = channel.courses;
+      let lessons = await [];
+      // console.log(channel);
 
-    let lessons = [];
-    // console.log(channel);
+      const newCourses = [];
 
-    channel.courses.forEach((eachCourse)=>{
-      let allLessons = eachCourse.lessons;
-      // count += allLessons.length;
-      allLessons.forEach((eachLesson)=>{
-        lessons.push(eachLesson);
-      });
-    })
-
-    console.log("Started....");
-
-    $("document").ready(function(){
-      console.log(lessons.length);
-      console.log(channel.name);
-      $("#diplayDashboard").html(`${channel.name} Dashboard`);
-      $(".channelName").html(`${channel.name}`);
-      $(".courseCount").append(` ${channel.courses.length}`);
-      $(".lessonCount").append(` ${lessons.length}`);
-
-      let maks = [];
-
-      courses.forEach((eachCourse) => {
-
-        let header =  `<!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-12 col-md-6 mb-4">
-                              <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                  <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">${eachCourse.title} Course</div>
-                                      <div class="row no-gutters align-items-center">
-                                        <div class="col-auto">
-                                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Lessons Under ${eachCourse.title}</div>
-                                        </div>
-                                      </div>
-                                      </div>
-
-                                      <br><br /><br >
-                                      <div id=${eachCourse.id} class="table-responsive">
-                                        <table class="table">
-                                          <thead>
-                                            <tr>
-                                              <th>Title</th>
-                                              <th>Video Link</th>
-                                              <th>Generator</th>
-                                              <th>Download</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>`
-        let lessonArr = [];
-        eachCourse.lessons.reverse().forEach((eachLessom) => {
-          let man = `  <tr>
-                <td>${eachLessom.title}</td>
-                <td><a href=${eachLessom.youtubeLink} target="_blanc">Video Link</a></td>
-                <td><button url=${eachLessom.youtubeLink} id=${eachLessom.id} lessonId=${eachLessom.id}  class="btn btn-primary massa">Generate Link</button></td>
-                <td id=setDownloadLink${eachLessom.id}>NA</td>
-              </tr>`
-          lessonArr.push(man);
+      await channel.courses.forEach((eachCourse)=>{
+        //do task two
+        newCoursesValidFor.forEach((eachId)=>{
+          if (eachId === eachCourse.id) {
+            newCourses.push(eachCourse);
+            newCoursesValidFor.splice(newCoursesValidFor.indexOf(eachId), 1);
+          }
         })
-        let downer =    `
-                          </tbody>
-                        </table>
-                        </div>
-                  </div>
-                </div>
-              </div>
-            </div>`
-
-            const final = header + lessonArr.join("\n") + downer
-            maks.push(final)
+        let allLessons = eachCourse.lessons;
+        allLessons.forEach((eachLesson)=>{
+           lessons.push(eachLesson);
+        });
       })
 
-      $("#appendRow").html(maks.join("\n"));
+      // console.log(newCourses);
+      // console.log("Started....");
 
-      const disableArray = [];
+      await $("document").ready(function(){
+        // console.log(lessons.length);
+        // console.log(channel.name);
+        $("#diplayDashboard").html(`${channel.name} Videos Download Portal<br/>  Welcome ${newUserName}`);
+        $(".channelName").html(`${channel.name}`);
+        $(".courseCount").append(` ${channel.courses.length}`);
+        $(".lessonCount").append(` ${lessons.length}`);
 
-      $(".massa").click(function(){
-        console.log("heyy");
-        const id = $(this).attr("lessonId");
-        const url = $(this).attr("url");
+        let maks = [];
 
-        $('.massa').prop("disabled", true);
-        $(`#setDownloadLink${id}`).html("Generating Link Please Wait")
-        makeCall(url, function(url){
-          const kink = `<a target="_black" class="btn btn-success" href=${url}>Download</a>`;
-          console.log(url);
-          $(`#setDownloadLink${id}`).html(kink);
-          $('.massa').prop("disabled", false);
-          // $(`#${id}`).prop("disabled", true);
-          disableArray.push(id);
+        newCourses.forEach((eachCourse) => {
 
-          // disable all clicked
-          disableArray.forEach((obj)=>{
-            $(`#${obj}`).prop("disabled", true);
-            $(`#${obj}`).text("Link Generated");
+          let header =  `<!-- Earnings (Monthly) Card Example -->
+                              <div class="col-xl-12 col-md-6 mb-4">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                  <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                      <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">${eachCourse.title} Course</div>
+                                        <div class="row no-gutters align-items-center">
+                                          <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Lessons Under ${eachCourse.title}</div>
+                                          </div>
+                                        </div>
+                                        </div>
+
+                                        <br><br /><br >
+                                        <div id=${eachCourse.id} class="table-responsive">
+                                          <table class="table">
+                                            <thead>
+                                              <tr>
+                                                <th>Title</th>
+                                                <th>Generator</th>
+                                                <th>Download</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>`
+          let lessonArr = [];
+          eachCourse.lessons.reverse().forEach((eachLessom) => {
+            let man = `  <tr>
+                  <td>${eachLessom.title}</td>
+                  <td><button url=${eachLessom.youtubeLink} id=${eachLessom.id} lessonId=${eachLessom.id}  class="btn btn-primary massa">Generate Download Link</button></td>
+                  <td id=setDownloadLink${eachLessom.id}>NA</td>
+                </tr>`
+            lessonArr.push(man);
+          })
+          let downer =    `
+                            </tbody>
+                          </table>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+
+              const final = header + lessonArr.join("\n") + downer
+              maks.push(final)
+        })
+
+        $("#appendRow").html(maks.join("\n"));
+
+        const disableArray = [];
+
+        $(".massa").click(function(){
+          console.log("heyy");
+          const id = $(this).attr("lessonId");
+          const url = $(this).attr("url");
+
+          $('.massa').prop("disabled", true);
+          $(`#setDownloadLink${id}`).html("Generating Link Please Wait")
+          makeCall(url, function(url){
+            const kink = `<a target="_black" class="btn btn-success" href=${url}>Download</a>`;
+            console.log(url);
+            $(`#setDownloadLink${id}`).html(kink);
+            $('.massa').prop("disabled", false);
+            // $(`#${id}`).prop("disabled", true);
+            disableArray.push(id);
+
+            // disable all clicked
+            disableArray.forEach((obj)=>{
+              $(`#${obj}`).prop("disabled", true);
+              $(`#${obj}`).text("Link Generated");
+            })
+
           })
 
         })
-
       })
 
+    }());
 
 
-    })
   </script>
 
 </body>
