@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher('c9f30615aa53f92bf6b4', {
+      cluster: 'eu',
+      forceTLS: true
+    });
+
+    const channel = pusher.subscribe('pusherListener');
+    channel.bind('koobiEvent', function(data) {
+      console.log(data);
+      $("#kelem").append(data.message);
+    });
+  </script>
+</head>
+<body>
+  <h1>Pusher Test</h1>
+  <p>
+    Try publishing an event to channel <code id="kelem">my-channel</code>
+    with event name <code>my-event</code>.
+  </p>
+</body>
