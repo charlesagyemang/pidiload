@@ -13,14 +13,14 @@
 
 
   <!-- Custom fonts for this template -->
-  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -97,6 +97,7 @@
         Addons
       </div>
 
+      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
@@ -128,32 +129,76 @@
 
       <!-- Main Content -->
       <div id="content">
+        <div class="container">
+          <br></br>
+            <div class="row">
 
-        <!-- End of Topbar -->
+                <div class="col-sm-3">
 
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
+                </div>
+                <div class="col-sm-6">
+                  <h1>Create Coupon</h1>
+                  <form>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Owner Name:*</label>
+                          <input id="inputOwnerName" type="text" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Owner Email:</label>
+                          <input id="inputOwnerEmail" type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
 
-          <!-- Page Heading -->
-          <br><br>
-          <h1 class="h3 mb-2 text-gray-800">Courses</h1>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                          <label for="recipient-name" class="col-form-label">Owner PhoneNumber:</label>
+                          <input id="inputOwnerPhoneNumber" type="number" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label for="recipient-name" class="col-form-label">Set Days*</label>
+                              <input id="inputSetDays" type="number" class="form-control">
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <label for="recipient-name" class="col-form-label">Price*:</label>
+                              <input id="inputPrice" type="number" class="form-control">
+                            </div>
+                          </div>
+                        </div>
 
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Courses Table</h6>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Select Course(s) This Coupon Can Buy*:</label>
+                      <div id="coursesSelect">
+
+                      </div>
+                    </div>
+                  </form>
+
+                  <div class="form-group">
+                    <button id="submitCouponAndCreateLink" type="text" class="btn btn-primary form-control" >Create Coupon</button>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+
+                </div>
+
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table id="lessonTableBody" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <table>
-              </div>
-            </div>
-          </div>
 
         </div>
-        <!-- /.container-fluid -->
-
       </div>
       <!-- End of Main Content -->
 
@@ -191,14 +236,13 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="../login.html">Logout</a>
+          <a class="btn btn-primary" href="../../login.html">Logout</a>
         </div>
       </div>
     </div>
   </div>
 
-
-  <button style="display:none" type="button" class="btn btn-primary openModalButton" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+  <button style="display:none" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -232,7 +276,6 @@
       </div>
     </div>
   </div>
-
 
 
 
@@ -276,29 +319,29 @@
     </div>
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery/jquery.min.js"></script>
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="../js/sb-admin-2.min.js"></script>
+  <script src="../../js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="../js/demo/datatables-demo.js"></script>
+  <script src="../../js/demo/datatables-demo.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="../js/addCourse.js"></script>
-
-
-  <script>
+  <script src="../../js/addCourse.js"></script>
+  <script type="text/javascript">
     const channel = JSON.parse(localStorage.channelGotten);
     const courses = channel.courses;
     // const lessons = JSON.parse(localStorage.lessons);
+    const coupons = channel.coupons;
+
     const myConfig =  {
       headers: { Authorization: `Bearer ${localStorage.tokenGotten}`}
     };
@@ -306,175 +349,115 @@
     let lessons = [];
     // console.log(channel);
 
+    // load shit
+    const coursesArray = [];
+
     channel.courses.forEach((eachCourse)=>{
+
+      // perform task 2
+      const format = `<div class="form-check">
+                        <input class="form-check-input" name="courses" type="checkbox" value=${eachCourse.id} id=${eachCourse.id}>
+                        <label class="form-check-label" for=${eachCourse.id}>
+                          ${eachCourse.title}
+                        </label>
+                      </div>`
+
       let allLessons = eachCourse.lessons;
+      coursesArray.push(format);
       // count += allLessons.length;
       allLessons.forEach((eachLesson)=>{
         lessons.push(eachLesson);
       });
     })
 
-    $("document").ready(function(){
+    console.log(myConfig);
 
+    // axios.post(`https://poole23.herokuapp.com/api/ping/teletabies`, myConfig)
+    // .then((response) => {
+    //   console.log(response.data);
+    // }, (error) => {
+    //   console.log(error);
+    // });
+
+
+    $("#coursesSelect").html(coursesArray.join("\n"))
+
+    $("document").ready(function(){
+      // INIT
       $("#diplayDashboard").html(`${channel.name} Dashboard`);
       $(".channelName").html(`${channel.name}`);
       $(".courseCount").append(` ${channel.courses.length}`);
       $(".lessonCount").append(` ${lessons.length}`);
 
       $(".allLessons").append(` ${courses.length}`);
-      // console.log(lessons);
 
+      console.log(coupons);
 
-      //======== Show Table Logic =====//
+      //==== Logic Begins =====//
 
-      const bodyHead = `
-                          <thead>
-                            <tr>
-                              <th>Course Title</th>
-                              <th>Description</th>
-                              <th>Trailer Link</th>
-                              <th>Lessons</th>
-                              <th>Edit</th>
-                              <th>Delete</th>
-                            </tr>
-                          </thead>
-                          <tfoot>
-                            <tr>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Youtube Link</th>
-                              <th>Course</th>
-                              <th>Edit</th>
-                              <th>Delete</th>
-                            </tr>
-                          </tfoot>
-                          <tbody>
-                        `
+      $("#submitCouponAndCreateLink").unbind("click").click(function(){
+        // console.log("heyy");
+        $this = $(this);
+        const cSelected = [];
 
-      lessonArray = []
+        $.each($("input[name='courses']:checked"), function(){
+            cSelected.push($(this).val())
+        });
 
-      courses.forEach((eachCourse)=>{
-        const lessonsUnder = eachCourse.lessons;
-        // console.log(courseLessonIsUnder);
-        const eacher = `<tr>
-                          <td>${eachCourse.title}</td>
-                          <td>${eachCourse.desc}</td>
-                          <td><a href=${eachCourse.trailerLink} target="_blanc">Video Link</a></td>
-                          <td>${eachCourse.lessons.length}</td>
-                          <td><button courseId=${eachCourse.id} class="btn btn-primary eachCourseEditButton">Edit</button></td>
-                          <td><button courseId=${eachCourse.id} class="btn btn-danger  eachCourseDeleteButton">Delete</button></td>
-                        </tr>`
+        // get values and do empty checks
 
-        lessonArray.push(eacher);
+        const channelId = channel.id;
+        const price     = $("#inputPrice").val();
+        const name      = $("#inputOwnerName").val();
+        const email     = $("#inputOwnerEmail").val();
+        const phoneNum  = $("#inputOwnerPhoneNumber").val();
+        const days      = $("#inputSetDays").val();
+
+        // console.log(cSelected);
+
+        if (cSelected.length > 0 && name.length > 0 && price.length > 0 && days.length > 0) {
+          console.log("alll valid fields checked");
+
+          // create send body
+
+          const bodyToSend = {
+            ownerDetails: { name: name, email: email },
+            price: price,
+            courses: cSelected,
+            newFields: { channelId: channelId, days: days },
+            channelId: channelId
+          }
+
+          console.log(bodyToSend);
+
+          // make api call
+          $this.text("Creating... Please Wait...")
+          axios.post(`https://poole23.herokuapp.com/api/coupons/`, bodyToSend, myConfig)
+          .then((response) => {
+            $this.text("Success... Realoading... Please Wait");
+            console.log("...done");
+            console.log(response.data);
+            localStorage.channelGotten = JSON.stringify(response.data);
+            console.log(localStorage.gottenChannel);
+            location.href = "/coupons";
+          }, (error) => {
+            console.log(error);
+          });
+
+          return
+        }
+
+        alert("Error: Make Sure All Fields Marked With Asteris Asre Filled. Thank You")
+        console.log("Charles invali paa nie");
+
+        //==== Logic ends ======//
+
       })
 
-      const tableDown = `  </tbody>
-                          </table>`
 
-
-
-      const final = bodyHead + lessonArray.join("")  + tableDown
-
-      $("#lessonTableBody").html(final)
-
-      $('#lessonTableBody').DataTable({
-        "pagingType": "full_numbers"
-      })
-
-      //======== End Show Table Logic =====//
-
-
-
-
-        //======== Edit Lesson Functionality ======//
-        $('#lessonTableBody tbody').on('click', '.eachCourseEditButton', function () {
-            const courseId = $(this).attr("courseId");
-
-            console.log(courseId);
-
-            const selectedCourse = courses.filter(cou => cou.id == courseId)[0];
-
-            $(".openModalButton").click();
-            $("#addCourseModalTitleText").html("Edit Course");
-            $("#addCourseSubmitButton").text("Edit Course");
-
-            $("#inputCourseTitle").val(selectedCourse.title);
-            $("#inputCourseDesc").val(selectedCourse.desc);
-            $("#inputCourseTrailerLink").val(selectedCourse.trailerLink);
-            // console.log(selectedCourse);
-
-            $("#addCourseSubmitButton").unbind("click").click(function(){
-              let $this = $(this);
-              let newTitle = $("#inputCourseTitle").val();
-              let newCourseDesc = $("#inputCourseDesc").val();
-              let newTrailerLink = $("#inputCourseTrailerLink").val();
-
-              const bodyToSend = {
-                title: newTitle,
-                desc: newCourseDesc,
-                trailerLink: newTrailerLink,
-              }
-
-              if ( newTitle === selectedCourse.title && newCourseDesc === selectedCourse.desc && newTrailerLink === selectedCourse.trailerLink) {
-                alert("Update Failed: No New Changes...")
-                return;
-              }
-
-
-
-              // make api call
-              console.log("something cvhnaged");
-
-              $this.text("Updatng Data Please Wait...")
-              console.log(JSON.parse(localStorage.myConfig));
-
-              axios.post(`https://poole23.herokuapp.com/api/courses/edit/${courseId}`, bodyToSend, myConfig)
-              .then((response) => {
-                $this.text("Success... Realoading... Please Wait");
-                // console.log("...done");
-                console.log(response.data);
-                localStorage.channelGotten = JSON.stringify(response.data);
-                console.log(localStorage.gottenChannel);
-                location.reload();
-              }, (error) => {
-                console.log(error);
-              });
-
-            })
-        });
-        //======== Edit Lesson Functionality ======//
-
-
-
-        //======== Delete Lesson Functionality ======//
-        $('#lessonTableBody tbody').on('click', '.eachCourseDeleteButton', function () {
-            const courseId = $(this).attr("courseId");
-            const $this = $(this);
-
-
-            const sure = confirm("Are You Sure You Wanna delete This Course? All Lessons Under The Course Will Bew Deleted As Well Please Note")
-
-            if (sure) {
-              $this.text("Deleting..")
-
-              axios.post(`https://poole23.herokuapp.com/api/courses/delete/${courseId}`, { channelId: channel.id }, myConfig)
-              .then((response) => {
-                $this.text("Success... Realoading... Please Wait");
-                console.log(response.data);
-                localStorage.channelGotten = JSON.stringify(response.data);
-                console.log(localStorage.gottenChannel);
-                location.reload();
-              }, (error) => {
-                console.log(error);
-                alert("An Error Ocuured Please Try Again")
-              });
-
-              return
-            }
-            console.log("not Sure");
-        });
-        //======== Delete Lesson Functionality ======//
     })
+
+
   </script>
 
 </body>

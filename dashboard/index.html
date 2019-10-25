@@ -96,7 +96,6 @@
         Addons
       </div>
 
-      <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
@@ -105,8 +104,8 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Details</h6>
-            <a class="collapse-item" href="/coupons">All Coupons</a>
-            <a class="collapse-item" href="#">Add Coupon</a>
+            <a class="couponClass collapse-item" href="/coupons">All Coupons</a>
+            <a class="collapse-item" href="/coupons/add">Add Coupon</a>
           </div>
         </div>
       </li>
@@ -184,7 +183,7 @@
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Coupons</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10</div>
+                          <div class="h5 mb-0 mr-3 couponClass font-weight-bold text-gray-800"></div>
                         </div>
 
                       </div>
@@ -352,6 +351,8 @@
     //lessons Logic
     const courses = channel.courses;
 
+    const coupons = channel.coupons;
+
     let lessons = [];
     // console.log(channel);
 
@@ -363,39 +364,15 @@
       });
     })
 
-    // localStorage.lessons = JSON.stringify(lessons);
-
-
-    /*
-    courses.forEach((eachCourse, ind)=>{
-      axios.post(`https://poole23.herokuapp.com/api/lessons/${channel.id}`, {
-        courseId: eachCourse.id,
-        payload: {},
-        title: `Lesson ${ind}22`,
-        desc: `Lesson One Description ${ind}212`,
-        youtubeLink: 'https://www.google.com',
-      }, JSON.parse(localStorage.myConfig))
-      .then((response) => {
-        console.log("...done");
-        console.log(response.data);
-        localStorage.channelGotten = JSON.stringify(response.data);
-        // console.log(localStorage.channelGotten);
-        // location.reload();
-      }, (error) => {
-        console.log(error);
-      });
-    })
-    */
-
-
 
     $("document").ready(function(){
       console.log(lessons.length);
       console.log(channel.name);
       $("#diplayDashboard").html(`${channel.name} Dashboard`);
-      $(".channelName").html(`${channel.name}`);
-      $(".courseCount").append(` ${channel.courses.length}`);
-      $(".lessonCount").append(` ${lessons.length}`);
+      $(".channelName").html(channel.name);
+      $(".courseCount").append(" " + channel.courses.length);
+      $(".lessonCount").append(" " + lessons.length);
+      $(".couponClass").append(" " + coupons.length);
 
     })
   </script>
