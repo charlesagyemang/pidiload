@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-72059622-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -302,6 +302,25 @@
   <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
 
   <script>
+
+
+    const tokenIsValid = (token, callback) => {
+      try {
+        const currentTime = Date.now()/1000;
+        const dataGotten =  JSON.parse(atob(token.split('.')[1])).exp;
+        return callback(dataGotten > currentTime)
+        // console.log(dataGotten > currentTime);
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const fullData = JSON.parse(localStorage.dataGotten);
+    tokenIsValid(fullData.token, (bool) => {
+     if (!bool) { alert("You Have An Expired Token Please Log In Again Thankyou"); location.href="/"; }
+    });
+
+
     const channel = JSON.parse(localStorage.channelGotten);
     const courses = channel.courses;
     const coupons = channel.coupons;

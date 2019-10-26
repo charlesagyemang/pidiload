@@ -10,7 +10,7 @@
 
     gtag('config', 'UA-72059622-2');
   </script>
-  
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -345,6 +345,24 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="../../js/addCourse.js"></script>
   <script type="text/javascript">
+
+  const tokenIsValid = (token, callback) => {
+    try {
+      const currentTime = Date.now()/1000;
+      const dataGotten =  JSON.parse(atob(token.split('.')[1])).exp;
+      return callback(dataGotten > currentTime)
+      // console.log(dataGotten > currentTime);
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const fullData = JSON.parse(localStorage.dataGotten);
+
+  tokenIsValid(fullData.token, (bool) => {
+   if (!bool) { alert("You Have An Expired Token Please Log In Again Thankyou"); location.href="/"; }
+  });
+
     const channel = JSON.parse(localStorage.channelGotten);
     const courses = channel.courses;
     // const lessons = JSON.parse(localStorage.lessons);

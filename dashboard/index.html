@@ -356,6 +356,23 @@
 
   <script type="text/javascript">
 
+  const tokenIsValid = (token, callback) => {
+    try {
+      const currentTime = Date.now()/1000;
+      const dataGotten =  JSON.parse(atob(token.split('.')[1])).exp;
+      return callback(dataGotten > currentTime)
+      // console.log(dataGotten > currentTime);
+    } catch (e) {
+      return null;
+    }
+  };
+
+  const fullData = JSON.parse(localStorage.dataGotten);
+
+  tokenIsValid(fullData.token, (bool) => {
+   if (!bool) { alert("You Have An Expired Token Please Log In Again Thankyou"); location.href="/"; }
+  });
+
     // console.log(JSON.parse(localStorage.data));
 
     const channel = JSON.parse(localStorage.channelGotten) ;
