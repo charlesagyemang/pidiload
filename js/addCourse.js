@@ -110,4 +110,18 @@ $("#addNewLesson").unbind("click").click(function(){
 
   })
 
+});
+//====== End Add New Lesson Logic ====//
+
+$("#fire").unbind("click").click(function(){
+  axios.get(`https://poole23.herokuapp.com/api/channels/${JSON.parse(localStorage.channelGotten).id}`, JSON.parse(localStorage.myConfig))
+  .then((response) => {
+    console.log("loading.....");
+    console.log(response.data);
+    localStorage.channelGotten = JSON.stringify(response.data);
+    console.log(localStorage.gottenChannel);
+    location.reload();
+  }, (error) => {
+    console.log(error);
+  });
 })
