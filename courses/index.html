@@ -320,7 +320,7 @@
     tokenIsValid(fullData.token, (bool) => {
      if (!bool) { alert("You Have An Expired Token Please Log In Again Thankyou"); location.href="/"; }
     });
-    
+
     const channel = JSON.parse(localStorage.channelGotten);
     const courses = channel.courses;
     // const lessons = JSON.parse(localStorage.lessons);
@@ -355,7 +355,8 @@
       const bodyHead = `
                           <thead>
                             <tr>
-                              <th>Course Title</th>
+                            <th>Course Title</th>
+
                               <th>Description</th>
                               <th>Trailer Link</th>
                               <th>Lessons</th>
