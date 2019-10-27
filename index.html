@@ -196,11 +196,12 @@
       <input type="text" id="youtubeUrl" class="Input-text" placeholder="Paste Youtube Link Here E.g https://www.youtube.com/watch?v=UHsFuDG6eG4">
       <label for="input" class="Input-label">Youtube Link</label>
     </div>
-      <center>
-        <p style="font-size:25px;color:white" id="displayProgress"></p>
-        <div id="revealDownloadButton">
-      </center>
+    <center>
+      <p style="font-size:25px;color:white" id="displayProgress"></p>
+      <div id="revealDownloadButton"></div>
+    </center>
     </div>
+
 
 
   <!-- Page Wrapper -->
@@ -228,7 +229,7 @@
 
   <script type="text/javascript">
 
-
+    localStorage.clear();
 
     (async function(){
 
@@ -245,25 +246,43 @@
           $("#shower").css("display","none");
           $this = $(this);
           const url = $this.val();
+          var pattern = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
+
+
 
           if (event.which == 13) {
-            if (url.length > 0) {
-              $("#displayProgress").html("Generating Download Link.... Please Wait..");
+            if (url.length > 0 && pattern.test(url)) {
+              $("#displayProgress").html("Generating Download Links.... Please Wait..");
               // make api call
-              axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link`, { url: url })
+              axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link.withOptions`, { url: url })
               .then((response) => {
-                $("#displayProgress").html("Link Generated Please Click On Download");
+                $("#displayProgress").html("Links Generated Please Click On Either To Download");
                 $this.text("Success... Realoading... Please Wait");
+                const dataGotten = response.data;
                 console.log(response.data);
-                const downloadButton = `<a style="font-size:25px;padding: 15px 32px" id="shower" class="btn btn-primary" href=${response.data.link} target=_blanc>Download</a><br><br/>`
-                $("#revealDownloadButton").html(downloadButton);
+
+                const resultArray = []
+                dataGotten.forEach((data)=>{
+
+                  console.log(data.format.split("-")[1].split(" "));
+                    // if (data.format.split("-")[1].split(" ")[1] === "audio") {
+                    //   return
+                    // }
+                    const downloadButton = `
+                      <p style="color:white">${data.filesize} - ${data.ext} - ${data.format.split("-")[1].split(" ")[1]}            <a style="font-size:10px;" id="shower" class="btn btn-primary" href=${data.url} target=_blanc>Download</a></p>
+                    `
+
+                    resultArray.push(downloadButton)
+                })
+
+                $("#revealDownloadButton").html(resultArray.join(""));
               }, (error) => {
                 console.log(error);
                 alert("An Error Ocuured Please Try Again")
               });
               return;
             }
-            alert("Please Enter A Url");
+            alert("Please Enter A Correct YoutubeUrl");
           }
         });
       })
