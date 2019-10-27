@@ -243,7 +243,7 @@
       await $("document").ready(function(){
 
         $( "#youtubeUrl" ).on( "keydown", function(event) {
-          $("#shower").css("display","none");
+          $(".shower").css("display","none");
           $this = $(this);
           const url = $this.val();
           var pattern = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
@@ -269,7 +269,7 @@
                     //   return
                     // }
                     const downloadButton = `
-                      <p style="color:white">${data.filesize} - ${data.ext} - ${data.format.split("-")[1].split(" ")[1]}            <a style="font-size:10px;" id="shower" class="btn btn-primary" href=${data.url} target=_blanc>Download</a></p>
+                      <p style="color:white">${data.filesize} - ${data.ext} - ${data.format.split("-")[1].split(" ")[1]}            <a style="font-size:10px;" class="btn btn-primary shower" href=${data.url} target=_blanc>Download</a></p>
                     `
 
                     resultArray.push(downloadButton)
