@@ -234,6 +234,13 @@
 
   <script type="text/javascript">
 
+    const urlParams = location.href;
+    const paramsUrl = urlParams.split("401030");
+
+
+
+    console.log("Dont Have");
+
     localStorage.clear();
 
     (async function(){
@@ -246,6 +253,37 @@
       });
 
       await $("document").ready(function(){
+
+        if (paramsUrl.length > 1) {
+          const urlRler = paramsUrl[1];
+          $("#displayProgress").html("Video Links Are Being Generated Please Wait....");
+
+          axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link.withOptions`, { url: urlRler })
+          .then((response) => {
+            $("#displayProgress").html("Video Links Generated Please Click On Either To Download");
+            // $this.text("Success... Realoading... Please Wait");
+            const dataGotten = response.data;
+            console.log(response.data);
+
+            const resultArray = []
+            dataGotten.reverse().forEach((data)=>{
+              console.log(data.format.split("-")[1].split(" "));
+                if (data.ext === "mp4") {
+                  const downloadButton = `
+                    <p class="shower" style="color:white">${data.filesize} - ${data.ext} - ${data.format.split("-")[1].split(" ")[1]}            <a style="font-size:10px;" class="btn btn-primary shower2" href=${data.url} target=_blanc>Download</a></p>
+                  `
+                  resultArray.push(downloadButton)
+                }
+            })
+            $("#revealDownloadButton").html(resultArray.join(""));
+          }, (error) => {
+            console.log(error);
+            alert("An Error Ocuured Please Try Again")
+          });
+          return;
+        }
+
+        console.log("lamaa");
 
         $( "#youtubeUrl" ).on( "keydown", function(event) {
           $(".shower").css("display","none");
