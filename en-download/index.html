@@ -245,7 +245,7 @@
                                             </thead>
                                             <tbody>`
           let lessonArr = [];
-          eachCourse.lessons.reverse().forEach((eachLessom) => {
+          eachCourse.lessons.forEach((eachLessom) => {
             let man = `  <tr>
                   <td>${eachLessom.title}</td>
                   <td><button url=${eachLessom.youtubeLink} id=${eachLessom.id} lessonId=${eachLessom.id}  class="btn btn-primary massa">Generate Download Link</button></td>

@@ -6,7 +6,8 @@
 
 //===== Add Course Logic =====//
 $("#addNewCourse").unbind("click").click(function(){
-  $("#addCourseModalTitleText").html("Add New Course");
+  console.log("gahah");
+  $("#addCourseModalTitleText").html("Add New Course .......");
   $("#addCourseSubmitButton").text("Add Course");
 
   $("#addCourseSubmitButton").unbind("click").click(function(){
@@ -15,20 +16,23 @@ $("#addNewCourse").unbind("click").click(function(){
     const title = $("#inputCourseTitle").val();
     const desc = $("#inputCourseDesc").val();
     const trailerLink = $("#inputCourseTrailerLink").val();
+    const price = $("#inputCoursePrice").val();
 
-    if (title.length > 0) {
-      console.log("full haramm");
+    if (title.length > 0 && desc.length && price.length > 0) {
+      console.log(price);
 
       const bodyToSend  = {
         title: title,
         desc: desc,
         trailerLink: trailerLink,
         channelId: channel.id,
-        payload: {},
+        payload: {
+          price: price
+        }
       }
 
       $this.text("Addind Data....");
-      // console.log(channel.id);
+      console.log(bodyToSend);
       // /*
       axios.post('https://poole23.herokuapp.com/api/courses', bodyToSend, JSON.parse(localStorage.myConfig))
       .then((response) => {
@@ -46,7 +50,7 @@ $("#addNewCourse").unbind("click").click(function(){
       return
     }
 
-    alert("Error: A Course Should At Least Have A Title");
+    alert("Error: A Course Should At Least Have A Title A Description And A Price.");
   })
 })
 //===== Add Course Logic =====//
