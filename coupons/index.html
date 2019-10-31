@@ -365,6 +365,8 @@
                               <th>Generated Link</th>
                               <th>ExpirationDate</th>
                               <th>Current Status</th>
+                              <th>Send Notification</th>
+                              <th>Phone Number</th>
                             </tr>
                           </thead>
                           <tfoot>
@@ -374,6 +376,8 @@
                             <th>Generated Link</th>
                             <th>ExpirationDate</th>
                             <th>Current Status</th>
+                            <th>Send Notification</th>
+                            <th>Phone Number</th>
                             </tr>
                           </tfoot>
                           <tbody>
@@ -385,13 +389,16 @@
         const formattedExpDate = eachCoupon.expirationDate.split("T")[0];
         const notExpired = formattedExpDate > todaysDate;
 
-        console.log(notExpired);
+        // console.log(notExpired);
         const eacher = `<tr>
                           <td>${eachCoupon.ownerDetails.name}</td>
                           <td>${eachCoupon.ownerDetails.email}</td>
                           <td><a href=${eachCoupon.newFields.link} target="_blank">${eachCoupon.newFields.link}</a></td>
                           <td>${formattedExpDate}</td>
                           ${(notExpired) ? "<td>ACTIVE</td>" : "<td>INACTIVE</td>" }
+                          <td><button couponId=${eachCoupon.id} class="btn btn-success notifyUser">Notify</button></td>
+                          <td>${eachCoupon.ownerDetails.number}</td>
+
                         </tr>`
 
         lessonArray.push(eacher);
@@ -411,6 +418,36 @@
       })
 
       //======== End Show Table Logic =====//
+
+      // notify user logic
+      $('#lessonTableBody tbody').on('click', '.notifyUser', function () {
+        let $this = $(this);
+
+        const couponId = $(this).attr("couponId") ;
+
+        const couponSelected =  coupons.filter(blob => blob.id === couponId)[0];
+
+        const bodyToSend = {
+          name: couponSelected.ownerDetails.name,
+          link: couponSelected.newFields.link,
+          days: couponSelected.newFields.days,
+          number: couponSelected.ownerDetails.number,
+          email: couponSelected.ownerDetails.email,
+        }
+        console.log(bodyToSend);
+        $this.text("Sending......")
+        // make request
+        axios.post('https://poole23.herokuapp.com/api/ping/admin.notifyUser', bodyToSend)
+        .then((response) => {
+          console.log(response.data);
+          $this.text("Success......")
+          $this.text("Notify")
+        }).catch((error) => {
+          console.log(error);
+          $this.text("Notify")
+        })
+
+      });
       //
 
 
