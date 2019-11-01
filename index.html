@@ -254,7 +254,7 @@
         if (paramsUrl.length > 1) {
           console.log(paramsUrl);
           const urlRler = paramsUrl[1];
-          $("#displayProgress").html("Vide Download Link Is Being Generated Please Wait....");
+          $("#displayProgress").html("Video Download Link Is Being Generated Please Wait....");
 
           axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link`, { url: urlRler })
           .then((response) => {
