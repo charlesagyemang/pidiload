@@ -367,6 +367,8 @@
                               <th>Current Status</th>
                               <th>Send Notification</th>
                               <th>Phone Number</th>
+                              <th>Courses</th>
+                              <th>Renew Coupon</th>
                             </tr>
                           </thead>
                           <tfoot>
@@ -378,6 +380,8 @@
                             <th>Current Status</th>
                             <th>Send Notification</th>
                             <th>Phone Number</th>
+                            <th>Courses</th>
+                            <th>Renew Coupon</th>
                             </tr>
                           </tfoot>
                           <tbody>
@@ -388,8 +392,15 @@
       coupons.forEach((eachCoupon)=>{
         const formattedExpDate = eachCoupon.expirationDate.split("T")[0];
         const notExpired = formattedExpDate > todaysDate;
+        const individualCourses = []
 
-        // console.log(notExpired);
+        eachCoupon.courses.forEach((cc) => {
+          mm = courses.filter(blob => blob.id === cc)[0].title;
+          individualCourses.push(mm);
+        })
+
+        // console.log(eachCoupon.newFields);
+
         const eacher = `<tr>
                           <td>${eachCoupon.ownerDetails.name}</td>
                           <td>${eachCoupon.ownerDetails.email}</td>
@@ -398,9 +409,9 @@
                           ${(notExpired) ? "<td>ACTIVE</td>" : "<td>INACTIVE</td>" }
                           <td><button couponId=${eachCoupon.id} class="btn btn-success notifyUser">Notify</button></td>
                           <td>${eachCoupon.ownerDetails.number}</td>
-
+                          <td> * ${individualCourses.join("<br /> * ")}</td>
+                          <td><input id=${eachCoupon.id} class="renewalTime" type="text" value=5 size="4" /><br /><br /><button classId=${eachCoupon.id} class="renewDays btn btn-primary">Renew</button></td>
                         </tr>`
-
         lessonArray.push(eacher);
       })
 
@@ -450,6 +461,42 @@
       });
       //
 
+
+      $('#lessonTableBody tbody').on('click', '.renewDays', function () {
+
+        $this = $(this);
+        const id = $(this).attr("classId");
+        const valop = $(`#${id}`).val();
+
+        const lac = coupons.filter(blob => blob.id === id)[0]
+
+        console.log(lac);
+
+        const bodyToSend = {
+          newFields: {
+            days: valop,
+            link: lac.newFields.link,
+            channelId: lac.newFields.channelId
+          }
+        }
+
+        // console.log(bodyToSend);
+
+        $this.text("Updating..")
+
+        axios.post(`https://poole23.herokuapp.com/api/coupons/edit/${id}`, bodyToSend, myConfig)
+        .then((response) => {
+          $this.text("Success... Realoading... Please Wait");
+          console.log("...done");
+          // console.log(response.data);
+          localStorage.channelGotten = JSON.stringify(response.data);
+          console.log(localStorage.gottenChannel);
+          location.href = "/coupons";
+        }, (error) => {
+          console.log(error);
+        });
+
+      });
 
     })
   </script>

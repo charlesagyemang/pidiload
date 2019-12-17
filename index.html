@@ -140,9 +140,6 @@
             localStorage.tokenGotten = data.token;
             localStorage.channelGotten = JSON.stringify(data.channels[data.channels.length - 1]);
             localStorage.myConfig = JSON.stringify({headers: { Authorization: `Bearer ${data.token}`}});
-            // console.log(JSON.parse(localStorage.myConfig));
-            // console.log(JSON.parse(localStorage.channelGotten));
-
             location.href = "/dashboard";
             // */
           }, (error) => {
