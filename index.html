@@ -229,7 +229,6 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="js/addCourse.js"></script>
 
 
   <script type="text/javascript">
@@ -238,19 +237,16 @@
     const paramsUrl = urlParams.split("401030");
 
 
-
-    console.log("Dont Have");
-
     localStorage.clear();
 
     (async function(){
 
-      await axios.get(`https://poole23.herokuapp.com/api/ping/`)
-      .then((response) => {
-        console.log(response.data);
-      }, (error) => {
-        console.log(error);
-      });
+      // await axios.get(`https://afrikdotorg.herokuapp.com/api/ping/`)
+      // .then((response) => {
+      //   console.log(response.data);
+      // }, (error) => {
+      //   console.log(error);
+      // });
 
       await $("document").ready(function(){
 
@@ -258,7 +254,7 @@
           const urlRler = paramsUrl[1];
           $("#displayProgress").html("Video Links Are Being Generated Please Wait....");
 
-          axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link.withOptions`, { url: urlRler })
+          axios.post(`https://afrikdotorg.herokuapp.com/api/ping/get.download.link.withOptions`, { url: urlRler })
           .then((response) => {
             $("#displayProgress").html("Video Links Generated Please Click On Either To Download");
             // $this.text("Success... Realoading... Please Wait");
@@ -298,7 +294,7 @@
             if (url.length > 0 && pattern.test(url)) {
               $("#displayProgress").html("Generating Video Download Links.... Please Wait..");
               // make api call
-              axios.post(`https://poole23.herokuapp.com/api/ping/get.download.link.withOptions`, { url: url })
+              axios.post(`https://afrikdotorg.herokuapp.com/api/ping/get.download.link.withOptions`, { url: url })
               .then((response) => {
                 $("#displayProgress").html("Video Links Generated Please Click On Either To Download");
                 $this.text("Success... Realoading... Please Wait");
@@ -329,7 +325,7 @@
 
     }());
 
-    // axios.post(`https://poole23.herokuapp.com/api/ping/teletabies`)
+    // axios.post(`https://afrikdotorg.herokuapp.com/api/ping/teletabies`)
     // .then((response) => {
     //   console.log(response.data);
     // }, (error) => {
